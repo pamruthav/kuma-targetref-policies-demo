@@ -1,11 +1,12 @@
+```
 kubectl delete meshcircuitbreaker mesh-circuit-breaker-all-default -n kuma-system
 kubectl delete meshtimeout mesh-gateways-timeout-all-default -n kuma-system
 kubectl delete meshtimeout mesh-timeout-all-default -n kuma-system
 kubectl delete meshretry mesh-retry-all-default -n kuma-system
-
+```
 
 ### MeshCircuitBreaker
-
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshCircuitBreaker
@@ -29,10 +30,10 @@ spec:
         maxRetries: 2
         maxRequests: 2
 EOF
-
+```
 
 ### MeshFaultInjection
-
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshFaultInjection
@@ -53,10 +54,11 @@ spec:
               httpStatus: 500
               percentage: 50
 EOF
+```
 
 
 ### MeshRateLimit
-
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshRateLimit
@@ -83,7 +85,9 @@ spec:
                   - name: "x-kuma-rate-limited"
                     value: "true"
 EOF
+```
 ### enable mTLS before next policy
+```
 cat <<EOF | kubectl apply -f - 
 apiVersion: kuma.io/v1alpha1
 kind: Mesh
@@ -97,11 +101,11 @@ spec:
       type: builtin
 
 EOF
-
+```
 ### MeshTrafficPermission
 
 #### deny-all
-
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshTrafficPermission
@@ -119,9 +123,9 @@ spec:
       default: 
         action: Deny
 EOF
-
+```
 #### allow fe-be
-
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshTrafficPermission
@@ -139,10 +143,11 @@ spec:
       default:
         action: Allow
 EOF
-
+```
 ``` kubectl -n kuma-system delete meshtrafficpermissions deny-all```
 
 #### allow-all
+```
 cat <<EOF | kubectl apply -f -
 apiVersion: kuma.io/v1alpha1
 kind: MeshTrafficPermission
@@ -160,7 +165,7 @@ spec:
       default: 
         action: Allow
 EOF
-
+```
 
 ---------------------
 
